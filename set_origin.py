@@ -14,5 +14,7 @@ def set_origin(gps):
         (latitude, longitude) of the origin
         None if a valid GPS position is not available
     """
-
+    if gps is None:
+        return None
+    
     return get_current_location(gps)
