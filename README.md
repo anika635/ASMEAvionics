@@ -17,7 +17,9 @@ Saved locations are written to a file that will be called locations.txt
 
 Functions Outlined:
 
-connect_gps(port, baud): Opens the connection to your GPS device so you can read from it.
+connect_gps(port, baud=115200): Opens the MAVLink connection to your GPS device,
+waits for a heartbeat, and returns the connection. Returns nothing if the
+connection cannot be opened or no heartbeat is received.
 
 get_current_location(gps): Reads the latest GPS fix and returns your latitude and longitude, or nothing if the signal isn't good enough yet.
 
