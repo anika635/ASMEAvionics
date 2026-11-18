@@ -1,3 +1,6 @@
+from haversine_distance import haversine_distance
+
+
 HALF_MILE_METERS = 804.672
 
 

@@ -15,13 +15,29 @@ def connect_gps(port, baud=115200):
         None if the connection cannot be opened or no heartbeat is received
     """
 
+    gps = None
     try:
         gps = mavutil.mavlink_connection(port, baud=baud)
         if gps.wait_heartbeat(timeout=10) is None:
-            print("Failed to connect to GPS: no heartbeat received")
+            print("Failed to connect to GPS: no data received")
+            _close_quietly(gps)
             return None
 
         return gps
     except (OSError, ValueError) as e:
         print(f"Failed to connect to GPS: {e}")
+        _close_quietly(gps)
         return None
+
+
+def _close_quietly(gps):
+    """
+    Releases the port so a retry on the same COM port doesn't fail with
+    "Access is denied". Ignores errors, since the port may already be gone.
+    """
+    if gps is None:
+        return
+    try:
+        gps.close()
+    except (OSError, ValueError):
+        pass

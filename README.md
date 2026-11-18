@@ -41,6 +41,25 @@ init_output_file(path): Creates the file and writes the column headers if it doe
 
 save_location(entry, path): Adds one row to the file.
 
+save_launch_position(origin, path): Records the launch (origin) coordinates in launch_position.txt. Each launch adds a row, so earlier launches are kept.
+
 main(): Ties it together. Connects to the GPS, sets the origin, then loops forever reading your location, checking should_save(), and saving when you've moved far enough.
+
+
+Testing:
+
+Run all checks from the project folder:
+
+    python -m unittest discover tests
+
+Fly a simulated drone in the terminal with W/A/S/D (uses the real functions above over a simulated MAVLink link):
+
+    python tests/flight_game.py
+
+Or watch it fly a preset route by itself:
+
+    python tests/flight_game.py --autopilot
+
+The game saves an entry every 10 m so saves show up quickly; the real program still saves every 0.5 mile. Use --save-every 804.672 to fly the game with the real distance, or --port 14570 if the default port is busy.
 
 

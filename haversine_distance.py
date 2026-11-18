@@ -13,6 +13,11 @@ def haversine_distance(point_a, point_b):
     dlon = lon2 - lon1
 
     a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
+
+    # Rounding can push `a` a tiny bit above 1 for points on opposite sides of
+    # the Earth, which would make sqrt(1 - a) crash with "math domain error"
+    a = min(1.0, a)
+
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
     return R * c
