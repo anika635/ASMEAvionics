@@ -1,3 +1,5 @@
+import math
+
 def calculate_bearing(point_a, point_b):
     """
     Calculates the direction from point_a to point_b.
