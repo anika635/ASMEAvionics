@@ -4,7 +4,7 @@
 
 Saves your current location relative to where you started.
 
-When the program starts, it records your initial GPS coordinates as the origin. As you move, it tracks your current position, and each time you travel 0.5 mile from the last saved point, it writes an entry to a file containing:
+When the program starts, it records your initial GPS coordinates as the origin. As you move, it tracks your current position, and each time you travel 100 feet from the last saved point, it writes an entry to a file containing:
 
 - Your exact current coordinates (latitude, longitude)
 - Your distance from the starting point
