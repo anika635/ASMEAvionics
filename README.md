@@ -33,7 +33,7 @@ calculate_bearing(point_a, point_b): Figures out which direction point B is from
 
 relative_offset(origin, current): Breaks your position down into how many meters north and east you are from the start. Easier to picture than a distance plus angle.
 
-should_save(last_saved, current, threshold): Checks if you've moved at least 0.5 mile since the last saved point. Returns true or false. - Isha
+should_save(last_saved, current, threshold): Checks if you've moved at least 100 feet (30.48 m) since the last saved point. Returns true or false. - Isha
 
 build_entry(origin, current): Packages everything for one save: timestamp, current coordinates, distance and bearing from the start, and the north/east offsets.
 
@@ -60,6 +60,6 @@ Or watch it fly a preset route by itself:
 
     python tests/flight_game.py --autopilot
 
-The game saves an entry every 10 m so saves show up quickly; the real program still saves every 0.5 mile. Use --save-every 804.672 to fly the game with the real distance, or --port 14570 if the default port is busy.
+The game saves an entry every 10 m so saves show up quickly; the real program saves every 100 feet. Use --save-every 30.48 to fly the game with the real distance, or --port 14570 if the default port is busy.
 
 

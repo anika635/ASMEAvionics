@@ -5,7 +5,7 @@ import unittest
 from haversine_distance import haversine_distance
 
 EARTH_RADIUS_M = 6371000
-HALF_MILE_M = 804.672
+HUNDRED_FEET_M = 30.48
 
 
 class HaversineErrorPoints(unittest.TestCase):
@@ -20,13 +20,13 @@ class HaversineErrorPoints(unittest.TestCase):
         a, b = (33.7861, -84.2695), (34.0, -84.0)
         self.assertAlmostEqual(haversine_distance(a, b), haversine_distance(b, a), places=6)
 
-    # The distance the logger actually cares about: half a mile due north
-    def test_half_mile_north(self):
+    # The distance the logger actually cares about: 100 feet due north
+    def test_100_feet_north(self):
         start = (33.7861, -84.2695)
-        dlat = math.degrees(HALF_MILE_M / EARTH_RADIUS_M)
+        dlat = math.degrees(HUNDRED_FEET_M / EARTH_RADIUS_M)
         end = (start[0] + dlat, start[1])
 
-        self.assertAlmostEqual(haversine_distance(start, end), HALF_MILE_M, places=3)
+        self.assertAlmostEqual(haversine_distance(start, end), HUNDRED_FEET_M, places=6)
 
     # ERROR POINT: crossing the 180 degree line. Two points 0.2 degrees apart
     # must NOT come out as ~40,000 km.

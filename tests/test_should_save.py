@@ -3,7 +3,7 @@ import math
 import unittest
 
 from haversine_distance import haversine_distance
-from should_save import HALF_MILE_METERS, should_save
+from should_save import HUNDRED_FEET_METERS, should_save
 
 EARTH_RADIUS_M = 6371000
 START = (33.7861, -84.2695)
@@ -15,8 +15,8 @@ def north_of(point, meters):
 
 class ShouldSaveErrorPoints(unittest.TestCase):
 
-    def test_half_mile_constant(self):
-        self.assertAlmostEqual(HALF_MILE_METERS, 0.5 * 1609.344)
+    def test_default_is_100_feet(self):
+        self.assertAlmostEqual(HUNDRED_FEET_METERS, 100 * 0.3048)
 
     # ERROR POINT: no GPS fix this loop
     def test_no_fix_never_saves(self):
@@ -38,21 +38,26 @@ class ShouldSaveErrorPoints(unittest.TestCase):
         self.assertFalse(should_save(START, north_of(START, 5)))
 
     # ERROR POINT: off-by-one at the boundary
-    def test_just_under_half_mile_does_not_save(self):
-        self.assertFalse(should_save(START, north_of(START, HALF_MILE_METERS - 0.01)))
+    def test_just_under_100_feet_does_not_save(self):
+        self.assertFalse(should_save(START, north_of(START, HUNDRED_FEET_METERS - 0.01)))
 
     def test_exactly_threshold_saves(self):
-        current = north_of(START, HALF_MILE_METERS)
+        current = north_of(START, HUNDRED_FEET_METERS)
         exact = haversine_distance(START, current)
         self.assertTrue(should_save(START, current, threshold=exact))
 
-    def test_over_half_mile_saves(self):
-        self.assertTrue(should_save(START, north_of(START, HALF_MILE_METERS + 1)))
+    def test_over_100_feet_saves(self):
+        self.assertTrue(should_save(START, north_of(START, HUNDRED_FEET_METERS + 0.5)))
 
-    # ERROR POINT: threshold units. It is METERS, not miles. Passing 0.5
-    # thinking "half a mile" saves on almost every reading.
-    def test_threshold_is_meters_not_miles(self):
-        self.assertTrue(should_save(START, north_of(START, 1), threshold=0.5))
+    def test_default_threshold_is_used(self):
+        self.assertFalse(should_save(START, north_of(START, 30)))
+        self.assertTrue(should_save(START, north_of(START, 31)))
+
+    # ERROR POINT: threshold units. It is METERS, not feet. Passing 100
+    # thinking "100 feet" would only save every 100 m (328 ft).
+    def test_threshold_is_meters_not_feet(self):
+        self.assertFalse(should_save(START, north_of(START, 50), threshold=100))
+        self.assertTrue(should_save(START, north_of(START, 50)))
 
     def test_custom_threshold(self):
         self.assertFalse(should_save(START, north_of(START, 50), threshold=100))

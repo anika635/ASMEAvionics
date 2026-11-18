@@ -1,10 +1,10 @@
 from haversine_distance import haversine_distance
 
 
-HALF_MILE_METERS = 804.672
+HUNDRED_FEET_METERS = 30.48  # 100 ft * 0.3048 m/ft
 
 
-def should_save(last_saved, current, threshold=HALF_MILE_METERS):
+def should_save(last_saved, current, threshold=HUNDRED_FEET_METERS):
     """
     Decides whether a new location entry should be written.
 
@@ -13,7 +13,7 @@ def should_save(last_saved, current, threshold=HALF_MILE_METERS):
     current:    (latitude, longitude) from get_current_location(), or None
                 if there was no valid GPS fix
     threshold:  minimum distance in METERS since the last saved point
-                (default 804.672 m = 0.5 mile)
+                (default 30.48 m = 100 feet)
 
     Returns:
         True if current is at least `threshold` meters from last_saved

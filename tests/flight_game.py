@@ -24,8 +24,8 @@ Controls:
     Q                               land and quit
 
 The game saves an entry every 10 m (SAVE_EVERY_M) so you can see saves
-happen quickly. The real program still uses should_save()'s default of
-0.5 mile. Change it with --save-every, e.g. --save-every 804.672.
+happen quickly. The real program uses should_save()'s default of 100 feet.
+Change it with --save-every, e.g. --save-every 30.48 for 100 feet.
 
 Output (overwritten each run):
     tests/sim_output/launch_position.txt
@@ -59,7 +59,7 @@ EARTH_RADIUS_M = 6371000
 DEFAULT_HOME = (33.7861, -84.2695)
 DEFAULT_PORT = 14560  # not 14550, so it won't clash with Mission Planner
 OUTPUT_DIR = os.path.join(PROJECT_ROOT, "tests", "sim_output")
-SAVE_EVERY_M = 10  # game save distance; the real program uses 0.5 mile
+SAVE_EVERY_M = 10  # game save distance; the real program uses 100 ft
 SPEEDS = {"1": 1, "2": 3, "3": 10}
 MOVES = {"w": (1, 0), "s": (-1, 0), "d": (0, 1), "a": (0, -1)}
 HEADING_ICON = {"w": "^", "s": "v", "d": ">", "a": "<"}

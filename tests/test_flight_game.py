@@ -14,7 +14,7 @@ import unittest
 from contextlib import redirect_stdout
 
 from haversine_distance import haversine_distance
-from should_save import HALF_MILE_METERS
+from should_save import HUNDRED_FEET_METERS
 from tests.flight_game import (
     AUTOPILOT_ROUTE, SAVE_EVERY_M, SPEEDS, FlightGame, check_flight_logs,
 )
@@ -168,12 +168,12 @@ class SimulatedFlightTests(unittest.TestCase):
         self.assertGreaterEqual(len(game.saves), 1 + 100 // 11)
         self.assertLessEqual(len(game.saves), 1 + 100 // 10)
 
-    def test_half_mile_mode_still_works(self):
-        game, _ = self.launch(save_every_m=HALF_MILE_METERS)
+    def test_real_100_feet_mode(self):
+        game, _ = self.launch(save_every_m=HUNDRED_FEET_METERS)
 
-        game.run_scripted("3" + "w" * 80)  # 800 m
+        game.run_scripted("3" + "w" * 3)  # 30 m, just under 100 ft
         self.assertEqual(len(game.saves), 1)
-        game.run_scripted("w")  # 810 m
+        game.run_scripted("w")  # 40 m
         self.assertEqual(len(game.saves), 2)
 
     # ERROR POINT: GPS drops out mid-flight. Nothing is saved while lost,
