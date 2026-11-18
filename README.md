@@ -29,11 +29,11 @@ set_origin(gps): Grabs your location when the program starts and stores it as th
 
 haversine_distance(point_a, point_b): Calculates the real distance in meters between two coordinates, accounting for the Earth's curve.
 
-calculate_bearing(point_a, point_b): Figures out which direction point B is from point A, in degrees (0 is north, 90 is east).
+calculate_bearing(point_a, point_b): Figures out which direction point B is from point A, in degrees (0 is north, 90 is east). - Isha
 
 relative_offset(origin, current): Breaks your position down into how many meters north and east you are from the start. Easier to picture than a distance plus angle.
 
-should_save(last_saved, current, threshold): Checks if you've moved at least 0.5 mile since the last saved point. Returns true or false.
+should_save(last_saved, current, threshold): Checks if you've moved at least 0.5 mile since the last saved point. Returns true or false. - Isha
 
 build_entry(origin, current): Packages everything for one save: timestamp, current coordinates, distance and bearing from the start, and the north/east offsets.
 
